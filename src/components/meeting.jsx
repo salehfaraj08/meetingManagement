@@ -14,21 +14,26 @@ const Meeting = () => {
     const [startHour, setStartHour] = useState('');
     const [EndHour, setEndHour] = useState('');
     const [addClicked, setAddClicked] = useState(false);
+    const [addShow, setAddShow] = useState(false);
     useEffect(() => {
-        const getDataMeetings = async () => {
-            try {
-                let mettings = await getMeetings();
-                console.log('mettings:', mettings);
-                setMeetings(mettings.data);
-            }
-            catch (err) {
-                console.log(err);
-            }
-        }
         getDataMeetings();
+        const intervalId = setInterval(() => {
+            getDataMeetings();
+        }, 5000) // in milliseconds
+        return () => clearInterval(intervalId)
+
     }, [])
 
-
+    const getDataMeetings = async () => {
+        try {
+            let mettings = await getMeetings();
+            console.log('mettings:', mettings);
+            setMeetings(mettings.data);
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
     const handleAddMeeting = async (e) => {
         e.preventDefault();
         console.log('submit:', participant, startDate, startHour, EndHour);
@@ -52,6 +57,7 @@ const Meeting = () => {
             setStartHour('');
             setEndHour('');
             setAddClicked(!addClicked);
+            setAddShow(false);
         }
         catch (err) {
             console.log(err);
@@ -70,6 +76,7 @@ const Meeting = () => {
         const tmp = { firstName: firstName, lastName: lastName };
         console.log(tmp);
         setParticipant([...participant, tmp])
+        setAddShow(true);
         console.log('part', participant);
     }
     const handlestartDate = (event) => {
@@ -129,45 +136,46 @@ const Meeting = () => {
                     <input className='addMeetbtn' type="button" value="New meeting" onClick={handleAddClicked} />
                 </div>
 
-                <div style={{ marginTop: '2vh', justifyContent: "center", display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10vw', minHeight: '100vh', background: '#F7F7F7' }}>
+                <div className='cards-cont' style={{ marginTop: '2vh', justifyContent: "center", display: 'flex', gap: '3vw', minHeight: '100vh' }}>
                     <div className='card-cont'>
-                        meetings in progress <FontAwesomeIcon icon={faFire} style={{ color: "orange" }}></FontAwesomeIcon>
+                        <p style={{ textAlign: 'center' }} className='status'>meetings in progress<FontAwesomeIcon icon={faFire} style={{ color: "orange", marginLeft: '0.5vw' }}></FontAwesomeIcon></p>
                         {
                             meetings ? meetings.map(meetup => {
-                                return <div className='meetup'>{checkStatus(meetup) === 0 ? <><Meetup meet={meetup} /></> : <></>}</div>
+                                return <div className='meetup-progress'>{checkStatus(meetup) === 0 ? <><Meetup meet={meetup} /></> : <></>}</div>
                             })
-                                : ''
+                                : <div>loading.....</div>
                         }
                     </div>
                     <div>
-                        meetings to be in future
+                        <p style={{ textAlign: 'center' }} className='status'>meetings to be in future</p>
+
                         {
                             meetings ? meetings.map(meetup => {
-                                return <div className='meetup'>{checkStatus(meetup) === 1 ? <><Meetup meet={meetup} /></> : <></>}</div>
+                                return <div className='meetup-future'>{checkStatus(meetup) === 1 ? <><Meetup meet={meetup} /></> : <></>}</div>
                             })
-                                : ''
+                                : <div>loading.....</div>
                         }
                     </div>
                     <div>
-                        meetings that are closed
+                        <p style={{ textAlign: 'center' }} className='status'>meetings that are closed</p>
+
                         {
                             meetings ? meetings.map(meetup => {
-                                return <div className='meetup'>{checkStatus(meetup) === 2 ? <><Meetup meet={meetup} /></> : <></>}</div>
+                                return <div className='meetup-closed'>{checkStatus(meetup) === 2 ? <><Meetup meet={meetup} /></> : <></>}</div>
                             })
-                                : ''
+                                : <div>loading.....</div>
                         }
                     </div>
                 </div>
             </div>
             <div style={{ display: !addClicked ? 'none' : 'block' }}>
-                <AddMeeting onsubmit={handleAddMeeting} handleNameChange={handleName} handleAddParticipant={addParticipant} handlestartDate={handlestartDate} handleStartHour={handleStartHour} handleEndHour={handleEndHour} />
+                <AddMeeting obj={{ startDate: startDate, startHour: startHour, EndHour: EndHour }} show={addShow} onsubmit={handleAddMeeting} handleNameChange={handleName} handleAddParticipant={addParticipant} handlestartDate={handlestartDate} handleStartHour={handleStartHour} handleEndHour={handleEndHour} />
                 <input type="button" value="back to Meetings" style={{ display: !addClicked ? 'none' : 'block' }} onClick={handleAddClicked} />
             </div>
         </div>
     );
 
 };
-
 export default Meeting;
 
 

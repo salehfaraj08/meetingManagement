@@ -30,7 +30,7 @@ body {
   list-style: none;
   width: 100vw;
   height: 10vh;
-  background: rgba(100, 100, 100, 0.5);
+  background: rgba(100, 100, 100, 0.8);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -45,44 +45,7 @@ nav {
 .container {
   display: flex;
   flex-direction: column;
-  margin-top: 3vh;
   gap: 3vh;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  width: 30vw;
-}
-
-.worker {
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 50vh;
-  width: 20vw;
-  margin-left: 3rem;
-  border-radius: 1rem;
-  box-shadow: black 0 0 1rem .2rem;
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.see, .inpt {
-  cursor: pointer;
-  width: 50%;
-  margin-top: 10px;
-  background: rgba(0, 0, 0, 0.3);
-  border: none;
-  outline: none;
-  padding: 10px;
-  font-size: 13px;
-  color: #fff;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  border-radius: 4px;
-  box-shadow: inset 0 -5px 45px rgba(100, 100, 100, 0.2), 0 1px 1px rgba(255, 255, 255, 0.2);
 }
 
 .cont-home {
@@ -101,12 +64,14 @@ nav {
   background: #18CB97;
   height: 7vh;
   margin-left: 60vw;
-  
+  padding: 0 1vw 0 1vw;
+  border-radius: .9vmin;
+  color: rgb(92, 83, 83);
 }
 
 .addMeetbtn:hover {
-  -webkit-box-shadow: inset -1px 3px 8px 5px #1F87FF, 2px 5px 16px 0px #0B325E, 5px 5px 15px 5px rgba(0, 0, 0, 0);
-  box-shadow: inset -1px 3px 8px 5px #1F87FF, 2px 5px 16px 0px #0B325E, 5px 5px 15px 5px rgba(0, 0, 0, 0);
+  -webkit-box-shadow: inset -1px 3px 8px 5px #206e58, 2px 5px 16px 0px #206e58, 5px 5px 15px 5px rgba(0, 0, 0, 0);
+  box-shadow: inset -1px 3px 8px 5px #206e58, 2px 5px 16px 0px #206e58, 5px 5px 15px 5px rgba(0, 0, 0, 0);
 }
 
 .list {
@@ -120,28 +85,95 @@ nav {
   color: #0B325E;
 }
 
-.listmeet{
+.listmeet {
   margin-left: 5rem;
+  color: blue;
+  animation: color 2s infinite;
+  font-weight: 800;
 }
 
-.card-cont{
+@keyframes color {
+  0% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 0.75;
+    color: red;
+  }
+  50% {
+    opacity: 0.5;
+    color: orange;
+  }
+  75% {
+    opacity: 0.75;
+    color: blue;
+  }
+  100% {
+    opacity: 1;
+    color: green;
+  }
+}
+
+.card-cont {
   margin-left: 1vw;
 }
 
-.card{
+.card {
   display: flex;
   flex-direction: row;
   background: white;
-  width: 24vw;
-  height: 20vh;
+  width: 30vw;
+  height: 25vh;
   margin-top: 2vh;
-  box-shadow: black 0 0 .5vmin .02vmin;
-  border-radius: .2vmin;
-  padding: .5vmin;
-  
+  border-radius: 12px;
+  padding: 12px;
+  -webkit-box-shadow: 5px 5px 5px 0px #4e4e4e, inset 4px 4px 15px 0px #4e4e4e, 5px 5px 15px 5px rgba(0, 0, 0, 0);
+  box-shadow: 5px 5px 5px 0px #4e4e4e, inset 4px 4px 15px 0px #4e4e4e, 5px 5px 15px 5px rgba(0, 0, 0, 0);
 }
 
-.card>div>p{
+.meetup-future .card:hover {
+  transform: scale(1.05);
+  box-shadow: 1px 1px 20px 20px rgba(170, 157, 44, 0.4);
+}
+
+.meetup-closed .card:hover {
+  transform: scale(1.05);
+  box-shadow: 1px 1px 20px 20px rgba(165, 24, 24, 0.4);
+}
+
+.meetup-progress .card:hover {
+  transform: scale(1.05);
+  box-shadow: 1px 1px 20px 20px rgba(16, 126, 49, 0.4);
+}
+
+.meetup-closed .num {
+  color: red;
+  font-size: 16px;
+}
+
+.meetup-progress .num {
+  color: green;
+  font-size: 16px;
+}
+
+.meetup-future .num {
+  color: orange;
+  font-size: 16px;
+}
+
+.card>div>p {
   font-weight: 550;
-  font-size: 12px;
+  font-size: 13px;
+  line-height: 1.4rem;
+}
+
+.status {
+  color: orange;
+  font-weight: 600;
+  font-style: italic;
+  font-size: 18px;
+}
+
+.cards-cont {
+  background: rgba(0, 0, 0, 0.7)
 }
