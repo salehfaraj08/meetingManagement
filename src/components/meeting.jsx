@@ -3,6 +3,8 @@ import { addMeeting, getMeetings } from "./api";
 import AddMeeting from "./addMeeting";
 import { Link } from "react-router-dom";
 import Meetup from "./meetup";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFire, faHandshake } from "@fortawesome/free-solid-svg-icons";
 const Meeting = () => {
     const [meetings, setMeetings] = useState([]);
     const [participant, setParticipant] = useState([]);
@@ -112,42 +114,45 @@ const Meeting = () => {
         else if (meetupTsEnd < now) {
             return 2;
         }
-        
+
     }
 
 
 
     return (
         <div className='container'>
+            <hr />
             <div style={{ display: addClicked ? 'none' : 'block' }}>
-                <input type="button" value="add meeting" onClick={handleAddClicked} />
-                <div>
-
+                <div className='list'>
+                    <span className='listmeet'>List Of Meetings</span>
+                    <FontAwesomeIcon icon={faHandshake} className='handShake' size='5x'></FontAwesomeIcon>
+                    <input className='addMeetbtn' type="button" value="New meeting" onClick={handleAddClicked} />
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'row', gap: '10vw' }}>
-                    <div>
-                        in progress
+
+                <div style={{ marginTop: '2vh', justifyContent: "center", display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10vw', minHeight: '100vh', background: '#F7F7F7' }}>
+                    <div className='card-cont'>
+                        meetings in progress <FontAwesomeIcon icon={faFire} style={{ color: "orange" }}></FontAwesomeIcon>
                         {
                             meetings ? meetings.map(meetup => {
-                                return <div className='meetup'>{checkStatus(meetup) === 0 ? <><Meetup/></> : <></>}</div>
+                                return <div className='meetup'>{checkStatus(meetup) === 0 ? <><Meetup meet={meetup} /></> : <></>}</div>
                             })
                                 : ''
                         }
                     </div>
                     <div>
-                        future
+                        meetings to be in future
                         {
                             meetings ? meetings.map(meetup => {
-                                return <div className='meetup'>{checkStatus(meetup) === 1 ? <></> : <></>}</div>
+                                return <div className='meetup'>{checkStatus(meetup) === 1 ? <><Meetup meet={meetup} /></> : <></>}</div>
                             })
                                 : ''
                         }
                     </div>
                     <div>
-                        closed
+                        meetings that are closed
                         {
                             meetings ? meetings.map(meetup => {
-                                return <div className='meetup'>{checkStatus(meetup) === 2 ? <></> : <></>}</div>
+                                return <div className='meetup'>{checkStatus(meetup) === 2 ? <><Meetup meet={meetup} /></> : <></>}</div>
                             })
                                 : ''
                         }

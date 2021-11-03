@@ -8,7 +8,7 @@ import AddMeeting from "./components/addMeeting";
 function App() {
 
   return (
-    <div>
+    <div style={{position:'relative'}}>
       <BrowserRouter>
         <Header />
         <Route exact path="/">

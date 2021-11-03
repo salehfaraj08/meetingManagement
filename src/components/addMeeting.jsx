@@ -31,11 +31,11 @@ const AddMeeting = ({ onsubmit, handleNameChange, handleAddParticipant, handlest
                 </div>
                 <div>
                     <label htmlFor="startHour">start hour</label>
-                    <input type="time" id="startHour" min="09:00" max="18:00" onChange={handleStartHour} required />
+                    <input type="time" id="startHour" min="09:00" max="20:00" onChange={handleStartHour} required />
                 </div>
                 <div>
                     <label htmlFor="endHour">end hour</label>
-                    <input type="time" id="endHour" min="09:00" max="18:00" onChange={handleEndHour} required />
+                    <input type="time" id="endHour" min="09:00" max="22:00" onChange={handleEndHour} required />
                 </div>
                 <input type="submit" value="submit" />
             </form>
