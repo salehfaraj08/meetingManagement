@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { addMeeting, getMeetings } from "./api";
+import { addMeeting, delMeeting, getMeetings } from "./api";
 import AddMeeting from "./addMeeting";
 import { Link } from "react-router-dom";
 import Meetup from "./meetup";
@@ -124,6 +124,17 @@ const Meeting = () => {
 
     }
 
+    const handleDelete = async (id) => {
+        const deleteRes = await delMeeting(id);
+        if (deleteRes.status === 200) {
+            const meetingsList = [...meetings];
+            let resultOfNonDeleted = meetingsList.filter((meet) => {
+                return meet.id !== id
+            })
+            setMeetings(resultOfNonDeleted)
+
+        }
+    }
 
 
     return (
@@ -138,10 +149,10 @@ const Meeting = () => {
 
                 <div className='cards-cont' style={{ marginTop: '2vh', justifyContent: "center", display: 'flex', gap: '3vw', minHeight: '100vh' }}>
                     <div className='card-cont'>
-                        <p style={{ textAlign: 'center' }} className='status'>meetings in progress<FontAwesomeIcon icon={faFire} style={{ color: "orange", marginLeft: '0.5vw' }}></FontAwesomeIcon></p>
+                        <p style={{ textAlign: 'center' }} className='status'>meetings in progress<FontAwesomeIcon icon={faFire} style={{ color: "yellow", marginLeft: '0.6vw' }}></FontAwesomeIcon></p>
                         {
                             meetings ? meetings.map(meetup => {
-                                return <div className='meetup-progress'>{checkStatus(meetup) === 0 ? <><Meetup meet={meetup} /></> : <></>}</div>
+                                return <div className='meetup-progress'>{checkStatus(meetup) === 0 ? <><Meetup meet={meetup} meetingType='progress' /></> : <></>}</div>
                             })
                                 : <div>loading.....</div>
                         }
@@ -151,7 +162,7 @@ const Meeting = () => {
 
                         {
                             meetings ? meetings.map(meetup => {
-                                return <div className='meetup-future'>{checkStatus(meetup) === 1 ? <><Meetup meet={meetup} /></> : <></>}</div>
+                                return <div className='meetup-future'>{checkStatus(meetup) === 1 ? <><Meetup meet={meetup} meetingType='future' /></> : <></>}</div>
                             })
                                 : <div>loading.....</div>
                         }
@@ -161,7 +172,7 @@ const Meeting = () => {
 
                         {
                             meetings ? meetings.map(meetup => {
-                                return <div className='meetup-closed'>{checkStatus(meetup) === 2 ? <><Meetup meet={meetup} /></> : <></>}</div>
+                                return <div className='meetup-closed'>{checkStatus(meetup) === 2 ? <><Meetup meet={meetup} meetingType='closed' handleDeleteCall={handleDelete} /></> : <></>}</div>
                             })
                                 : <div>loading.....</div>
                         }
@@ -169,8 +180,8 @@ const Meeting = () => {
                 </div>
             </div>
             <div style={{ display: !addClicked ? 'none' : 'block' }}>
-                <AddMeeting obj={{ startDate: startDate, startHour: startHour, EndHour: EndHour }} show={addShow} onsubmit={handleAddMeeting} handleNameChange={handleName} handleAddParticipant={addParticipant} handlestartDate={handlestartDate} handleStartHour={handleStartHour} handleEndHour={handleEndHour} />
-                <input type="button" value="back to Meetings" style={{ display: !addClicked ? 'none' : 'block' }} onClick={handleAddClicked} />
+                <AddMeeting obj={{ startDate: startDate, startHour: startHour, EndHour: EndHour }} show={addShow} onsubmit={handleAddMeeting} handleNameChange={handleName} handleAddParticipant={addParticipant} handlestartDate={handlestartDate} handleStartHour={handleStartHour} handleEndHour={handleEndHour} handleAddClick={handleAddClicked} />
+
             </div>
         </div>
     );

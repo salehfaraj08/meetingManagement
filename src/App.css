@@ -123,7 +123,7 @@ nav {
   flex-direction: row;
   background: white;
   width: 30vw;
-  height: 25vh;
+  height: 28vh;
   margin-top: 2vh;
   border-radius: 12px;
   padding: 12px;
@@ -176,4 +176,60 @@ nav {
 
 .cards-cont {
   background: rgba(0, 0, 0, 0.7)
+}
+
+.form-out-container {
+  display: flex;
+  justify-content: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 40vw;
+  height: 80vh;
+  border-radius: 6px;
+  background: rgba(148, 103, 21, 0.4);
+  box-shadow: 0 0 15px #006622;
+  padding: 30px;
+}
+
+/********************* form css *********************/
+
+.form input, select {
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form input {
+  width: calc(100% - 50px);
+  padding: 5px;
+}
+
+.form input[type="date"] {
+  padding: 4px 5px;
+}
+
+select {
+  width: 80%;
+  padding: 7px 0;
+  background: transparent;
+}
+
+.form input:hover, select:hover {
+  border: 1px solid transparent;
+  box-shadow: 0 0 6px 0 blue;
+  color: blue;
+}
+
+.deleteBtn{
+  cursor: pointer;
+  border: none;
+  background: #18CB97;
+  height: 6vh;
+  width: 8vw;
+  border-radius: .9vmin;
+  color: rgb(92, 83, 83);
 }
