@@ -22,10 +22,7 @@ const Meetup = ({ meet, meetingType, handleDeleteCall,handleEditCall }) => {
                     <input className='deleteBtn' type='button' value='delete' onClick={() => handleDeleteCall(meet.id)}></input>
                     : ''
                 }
-                {meetingType === 'progress' || meetingType === 'future' ?
-                    <input className='editBtn' type='button' value='edit' onClick={() => handleEditCall(meet.id)}></input>
-                    : ''
-                }
+                
             </div>
         </div>
     </>
