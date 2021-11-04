@@ -4,7 +4,6 @@ const AddMeeting = ({ handleAddClick, obj, show, onsubmit, handleNameChange, han
     const [users, setUsers] = useState([]);
     useEffect(() => {
         getUsers().then(response => {
-            console.log(response.data);
             setUsers(response.data);
         }).catch(err => {
             console.log(err);

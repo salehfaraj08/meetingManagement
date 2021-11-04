@@ -195,6 +195,16 @@ nav {
   padding: 30px;
 }
 
+.contact-form{
+  background: rgba(21, 148, 78, 0.3);
+}
+
+.contact-form .submit{
+  border-radius: 30%;
+  width: 10vw;
+  margin-left: 11vw;
+}
+
 /********************* form css *********************/
 
 .form input, select {
@@ -215,7 +225,6 @@ nav {
 select {
   width: 80%;
   padding: 7px 0;
-  background: transparent;
 }
 
 .form input:hover, select:hover {

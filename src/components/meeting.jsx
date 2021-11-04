@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { addMeeting, delMeeting, getMeetings } from "./api";
 import AddMeeting from "./addMeeting";
-import { Link } from "react-router-dom";
 import Meetup from "./meetup";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFire, faHandshake } from "@fortawesome/free-solid-svg-icons";
@@ -16,6 +15,7 @@ const Meeting = () => {
     const [addClicked, setAddClicked] = useState(false);
     const [addShow, setAddShow] = useState(false);
     useEffect(() => {
+        setAddClicked(false);
         getDataMeetings();
         const intervalId = setInterval(() => {
             getDataMeetings();
@@ -27,7 +27,6 @@ const Meeting = () => {
     const getDataMeetings = async () => {
         try {
             let mettings = await getMeetings();
-            console.log('mettings:', mettings);
             setMeetings(mettings.data);
         }
         catch (err) {
@@ -36,7 +35,6 @@ const Meeting = () => {
     }
     const handleAddMeeting = async (e) => {
         e.preventDefault();
-        console.log('submit:', participant, startDate, startHour, EndHour);
         let data = {
             participants: participant,
             startDate: startDate,
@@ -45,7 +43,6 @@ const Meeting = () => {
         }
         try {
             let mettings = await addMeeting(data);
-            console.log('add mettings:', mettings.data);
             let newData = mettings.data;
             const mettingsList = [...meetings];
             mettingsList.push(newData)
@@ -66,27 +63,20 @@ const Meeting = () => {
     }
 
     const handleName = (event) => {
-        console.log(event.target.value);
         let name = event.target.value.split(' ');
         setFirstName(name[0]);
         setLastName(name[1]);
-        console.log(name);
     }
     const addParticipant = () => {
         const tmp = { firstName: firstName, lastName: lastName };
-        console.log(tmp);
         setParticipant([...participant, tmp])
         setAddShow(true);
-        console.log('part', participant);
     }
     const handlestartDate = (event) => {
-        console.log(event.target.value);
         let date = Math.round(new Date(event.target.value).getTime() / 1000);
-        console.log(date);
         setStartDate(date);
     }
     const handleStartHour = (event) => {
-        console.log(event.target.value);
         setStartHour(event.target.value);
     }
     const handleEndHour = (event) => {
@@ -105,13 +95,9 @@ const Meeting = () => {
         let meetupDayStr = meetupday < 10 ? '0' + meetupday : '' + meetupday;
         const meetUpDateStart = `${meetupyear}/${meetupMonthStr}/${meetupDayStr} ${meetup.startHour}`;
         const meetUpDateEnd = `${meetupyear}/${meetupMonthStr}/${meetupDayStr} ${meetup.endHour}`;
-        console.log(meetUpDateStart, meetUpDateEnd);
         let meetupTsStart = Date.parse(meetUpDateStart);
         let meetupTsEnd = Date.parse(meetUpDateEnd);
-        console.log('yousef', meetupTsStart, meetupTsEnd);
         let now = new Date().getTime();
-        console.log(now);
-
         if (meetupTsEnd > now && meetupTsStart < now) {
             return 0;
         }
@@ -121,7 +107,6 @@ const Meeting = () => {
         else if (meetupTsEnd < now) {
             return 2;
         }
-
     }
 
     const handleDelete = async (id) => {
@@ -132,7 +117,6 @@ const Meeting = () => {
                 return meet.id !== id
             })
             setMeetings(resultOfNonDeleted)
-
         }
     }
 
@@ -181,7 +165,6 @@ const Meeting = () => {
             </div>
             <div style={{ display: !addClicked ? 'none' : 'block' }}>
                 <AddMeeting obj={{ startDate: startDate, startHour: startHour, EndHour: EndHour }} show={addShow} onsubmit={handleAddMeeting} handleNameChange={handleName} handleAddParticipant={addParticipant} handlestartDate={handlestartDate} handleStartHour={handleStartHour} handleEndHour={handleEndHour} handleAddClick={handleAddClicked} />
-
             </div>
         </div>
     );

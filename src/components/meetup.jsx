@@ -1,4 +1,4 @@
-const Meetup = ({ meet, meetingType, handleDeleteCall }) => {
+const Meetup = ({ meet, meetingType, handleDeleteCall,handleEditCall }) => {
     const convertTimeStamp = (time) => {
         let unix_timestamp = time
         let date = new Date(unix_timestamp * 1000);
@@ -20,6 +20,10 @@ const Meetup = ({ meet, meetingType, handleDeleteCall }) => {
                 <p>end hour: {meet.endHour}</p>
                 {meetingType === 'closed' || meetingType === 'future' ?
                     <input className='deleteBtn' type='button' value='delete' onClick={() => handleDeleteCall(meet.id)}></input>
+                    : ''
+                }
+                {meetingType === 'progress' || meetingType === 'future' ?
+                    <input className='editBtn' type='button' value='edit' onClick={() => handleEditCall(meet.id)}></input>
                     : ''
                 }
             </div>
